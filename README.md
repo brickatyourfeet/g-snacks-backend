@@ -48,8 +48,6 @@ This repo includes some files to get you started, but it's up to you to finish t
   - User **cannot** delete other users reviews
 
 
-## Stretch
-
 - **Unauthenticated users do not see forms and fields they cannot use**
   - Hide the review form if a user is not logged-in
   - Hide all buttons the user is not authorized to use
