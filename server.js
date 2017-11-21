@@ -1,4 +1,3 @@
-
 const express = require('express')
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
@@ -9,6 +8,9 @@ app.use(bodyParser.json());
 
 const snacks = require('./routes/snacks');
 app.use('/api', snacks);
+
+const reviews = require('./routes/reviews');
+app.use('/api', reviews);
 
 app.use((req, res) => {
   const status = 404;
