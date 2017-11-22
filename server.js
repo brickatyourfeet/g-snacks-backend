@@ -6,11 +6,11 @@ const path = require('path');
 const app = express();
 app.use(bodyParser.json());
 
-const snacks = require('./routes/snacks');
-app.use('/api', snacks);
+const snacks = require('./src/routes/snacks');
+app.use('/api/snacks', snacks);
 
-const reviews = require('./routes/reviews');
-app.use('/api', reviews);
+const reviews = require('./src/routes/reviews');
+app.use('/api/reviews', reviews);
 
 app.use((req, res) => {
   const status = 404;
