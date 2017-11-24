@@ -11,4 +11,12 @@ router.get('/snacks', (req, res, next) => {
     .catch((err) => next(err))
 })
 
+router.get('/snacks/:id', (req, res, next) => {
+  knex('snacks')
+    .where('id', req.params.id).then(result => {
+      res.send(result);
+    })
+
+})
+
 module.exports = router;
