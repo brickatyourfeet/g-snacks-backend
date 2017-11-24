@@ -6,20 +6,25 @@
   "scripts": {
     "dev": "nodemon server.js",
     "knex": "knex",
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "./node_modules/mocha/bin/_mocha"
   },
   "keywords": [],
-  "author": "Scott Hurlow <scott.hurlow@galvanize.com>",
+  "author": "Not Scott Hurlow <scott.hurlow@galvanize.com>",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.17.2",
     "boom": "^5.2.0",
     "express": "^4.15.3",
+    "jwt-simple": "^0.5.0",
     "knex": "^0.13.0",
+    "moment": "^2.19.2",
     "morgan": "^1.8.2",
     "pg": "^7.0.2"
   },
   "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^4.0.1",
     "nodemon": "^1.12.1"
   }
 }
