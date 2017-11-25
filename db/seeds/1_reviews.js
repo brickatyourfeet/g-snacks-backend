@@ -16,6 +16,6 @@ exports.seed = function(knex, Promise) {
         user_id: 9090
       }]
 
-      return knex('reviews').insert(reviews);
+      return knex('reviews').insert(reviews)
     })
 }

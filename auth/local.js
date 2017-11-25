@@ -1,7 +1,7 @@
 const moment = require('moment')
 const jwt = require('jwt-simple')
 
-const TOKEN_SECRET = '2c5ba43d-551c-42f1-ae55-aebdfac97b6a';
+const TOKEN_SECRET = '2c5ba43d-551c-42f1-ae55-aebdfac97b6a'
 //token secret should be saved elsewhere
 
 function encodeToken(user) {
@@ -11,9 +11,10 @@ function encodeToken(user) {
     sub: user[0]
   }
   // console.log(payload);
-  return jwt.encode(payload, TOKEN_SECRET);
+  return jwt.encode(payload, TOKEN_SECRET)
 }
 
+//consider JWT instead of JWT-simple - async vs sync
 function decodeToken(token, callback) {
   const payload = jwt.decode(token, TOKEN_SECRET)
   const now = moment().unix()
