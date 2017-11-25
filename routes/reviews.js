@@ -52,19 +52,28 @@ router.post('/reviews', (req, res, next) => {
 })
 
 router.patch('/reviews/:id', (req, res, next) => {
+
   let id = req.params.id
-  let body = {
-    title: req.body.title,
-    text: req.body.text,
-    rating: req.body.rating
-  }
+  let review = knex('reviews').where('id', id).then(review => {
+    console.log(review[0].user_id);
+    console.log(id);
+    if (review[0].user_id === req.body.user_id) {
 
-  knex('reviews').where('id', id).update(body).then(result => {
-    res.statusCode = 200
-    res.send('updated')
-    console.log('do something else here')
+      let body = {
+        title: req.body.title,
+        text: req.body.text,
+        rating: req.body.rating
+      }
+
+      knex('reviews').where('id', id).update(body).then(result => {
+        res.statusCode = 200
+        res.send('updated')
+      })
+    } else {
+      res.statusCode = 500;
+      res.send("You did not create this review.");
+    }
   })
-
 })
 
 

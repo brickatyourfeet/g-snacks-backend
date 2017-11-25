@@ -19,4 +19,6 @@ router.get('/snacks/:id', (req, res, next) => {
 
 })
 
+router.delete()
+
 module.exports = router;

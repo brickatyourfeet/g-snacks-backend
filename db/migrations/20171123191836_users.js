@@ -3,10 +3,10 @@ exports.up = function(knex, Promise) {
     table.increments();
     table.string('email').unique().notNullable();
     table.string('password').notNullable();
-    table.string('first_name').notNullable();
-    table.string('last_name').notNullable();
-    table.boolean('admin').notNullable().defaultTo(false);
-    table.timestamp('created_at').notNullable().defaultTo(knex.raw('now()'));
+    table.string('first_name');
+    table.string('last_name');
+    table.boolean('admin').defaultTo(false);
+    table.timestamp('created_at').defaultTo(knex.raw('now()'));
   })
 };
 
