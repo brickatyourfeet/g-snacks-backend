@@ -1,5 +1,5 @@
-const express = require('express');
-const knex = require('../db/knex');
+const express = require('express')
+const knex = require('../db/knex')
 
 const router = express.Router();
 
@@ -14,11 +14,11 @@ router.get('/snacks', (req, res, next) => {
 router.get('/snacks/:id', (req, res, next) => {
   knex('snacks')
     .where('id', req.params.id).then(result => {
-      res.send(result);
+      res.send(result)
     })
 
 })
 
-router.delete()
+// router.delete()  delete if user id matches or isAdmin
 
-module.exports = router;
+module.exports = router

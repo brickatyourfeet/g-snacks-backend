@@ -42,7 +42,7 @@ router.post('/login', (req, res, next) => {
       })
     })
 })
-//use the get user route for deciding what user sees and can post?
+//use the get user route for deciding what user sees and can post on front end?
 router.get('/user',
   authHelpers.ensureAuthenticated,
   (req, res, next) => {

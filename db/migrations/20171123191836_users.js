@@ -7,7 +7,7 @@ exports.up = function(knex, Promise) {
     table.string('last_name');
     table.boolean('admin').defaultTo(false);
     table.timestamp('created_at').defaultTo(knex.raw('now()'));
-  })
+  });
 };
 
 exports.down = function(knex, Promise) {
