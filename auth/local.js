@@ -2,6 +2,7 @@ const moment = require('moment')
 const jwt = require('jwt-simple')
 
 const TOKEN_SECRET = '2c5ba43d-551c-42f1-ae55-aebdfac97b6a';
+//token secret should be saved elsewhere
 
 function encodeToken(user) {
   const payload = {
