@@ -12,7 +12,7 @@ app.use('/api/snacks', snacks);
 const reviews = require('./src/routes/reviews');
 app.use('/api/reviews', reviews);
 
-const auth = require('./routes/auth');
+const auth = require('./src/routes/auth');
 app.use('/api', auth)
 
 app.use((req, res) => {
