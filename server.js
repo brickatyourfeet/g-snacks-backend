@@ -12,6 +12,9 @@ app.use('/api/snacks', snacks);
 const reviews = require('./src/routes/reviews');
 app.use('/api/reviews', reviews);
 
+const auth = require('./routes/auth');
+app.use('/api', auth)
+
 app.use((req, res) => {
   const status = 404;
   const message = `Could not ${req.method} ${req.path}`;

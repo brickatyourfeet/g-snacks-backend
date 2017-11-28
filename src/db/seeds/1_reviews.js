@@ -14,8 +14,8 @@ exports.seed = function(knex, Promise) {
         rating: 4,
         snack_id: 8282,
         user_id: 9090
-      }];
+      }]
 
-      return knex('reviews').insert(reviews);
-    });
-};
+      return knex('reviews').insert(reviews)
+    })
+}
