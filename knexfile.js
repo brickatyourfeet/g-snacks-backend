@@ -6,10 +6,10 @@ module.exports = {
     client: 'pg',
     connection: 'postgres://localhost/snacks_dev',
     migrations: {
-      directory: path.join(__dirname, 'db', 'migrations')
+      directory: path.join(__dirname, 'src', 'db', 'migrations')
     },
     seeds: {
-      directory: path.join(__dirname, 'db', 'seeds')
+      directory: path.join(__dirname, 'src', 'db', 'seeds')
     }
   },
 
@@ -17,10 +17,10 @@ module.exports = {
     client: 'pg',
     connection: 'postgres://localhost/snacks_test',
     migrations: {
-      directory: path.join(__dirname, 'db', 'migrations')
+      directory: path.join(__dirname, 'src', 'db', 'migrations')
     },
     seeds: {
-      directory: path.join(__dirname, 'db', 'seeds')
+      directory: path.join(__dirname, 'src', 'db', 'seeds')
     }
   },
 
@@ -28,10 +28,10 @@ module.exports = {
     client: 'pg',
     connection: process.env.DATABASE_URL,
     migrations: {
-      directory: path.join(__dirname, 'db', 'migrations')
+      directory: path.join(__dirname, 'src', 'db', 'migrations')
     },
     seeds: {
-      directory: path.join(__dirname, 'db', 'seeds')
+      directory: path.join(__dirname, 'src', 'db', 'seeds')
     }
   }
 };
