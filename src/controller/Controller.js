@@ -17,6 +17,14 @@ module.exports = name => {
   }
 
   class Controller {
+    static exists (req, res, next) {
+      const status = 404
+      const message = `Could not find ${singular} with id of ${req.params.id}`
+
+      Model.show(req.params.id)
+      .then(response => response ? next() : next({ status, message }))
+    }
+
     static index (req, res, next) {
       Model.index()
       .then(response => res.json({ [pluralize(name)]: response }))
