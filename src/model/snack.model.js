@@ -1,7 +1,5 @@
-const knex = require('../db/knex')
+const Model = require('./Model')('snacks')
 
-const getAllSnacks = () => knex('snacks')
+class Snack extends Model {}
 
-module.exports = {
-  getAllSnacks
-}
+module.exports = Snack

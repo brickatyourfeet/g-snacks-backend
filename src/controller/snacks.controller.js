@@ -1,11 +1,5 @@
-const { snackModel: model } = require('../model')
+const Controller = require('./Controller')('snacks')
 
-const getAllSnacks = (req, res, next) => {
-  model.getAllSnacks().then(snacks => {
-    res.status(200).json({ snacks })
-  })
-}
+class SnacksController extends Controller {}
 
-module.exports = {
-  getAllSnacks
-}
+module.exports = SnacksController
