@@ -16,7 +16,6 @@ router.get('/snacks/:id', (req, res, next) => {
     .where('id', req.params.id).then(result => {
       res.send(result)
     })
-
 })
 
 // router.delete()  delete if user id matches or isAdmin
