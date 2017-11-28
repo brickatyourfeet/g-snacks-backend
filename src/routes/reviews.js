@@ -3,7 +3,7 @@ const knex = require('../db/knex');
 
 const router = express.Router();
 
-router.get('/reviews', (req, res, next) => {
+router.get('/', (req, res, next) => {
   knex('reviews')
     .then((result) => {
       res.send(result)
@@ -12,7 +12,7 @@ router.get('/reviews', (req, res, next) => {
 })
 
 
-router.get('/reviews/:id', (req, res, next) => {
+router.get('/:id', (req, res, next) => {
   const id = req.params.id
   if (typeof id != 'undefined') {
     knex('reviews')
@@ -26,7 +26,7 @@ router.get('/reviews/:id', (req, res, next) => {
 })
 
 
-router.post('/reviews', (req, res, next) => {
+router.post('/', (req, res, next) => {
 
   if (req.body.rating) { //will need more validation than this
     const review = {
@@ -51,7 +51,7 @@ router.post('/reviews', (req, res, next) => {
   }
 })
 
-router.patch('/reviews/:id', (req, res, next) => {
+router.patch('/:id', (req, res, next) => {
 
   let id = req.params.id
   let review = knex('reviews').where('id', id).then(review => {
@@ -76,7 +76,7 @@ router.patch('/reviews/:id', (req, res, next) => {
   })
 })
 
-router.delete('/reviews/:id', (req, res, next) => {
+router.delete('/:id', (req, res, next) => {
   let id = req.params.id
   knex('reviews').where('id', id).then(review => {
     if (review[0].user_id === req.body.user_id || req.body.isAdmin) {
