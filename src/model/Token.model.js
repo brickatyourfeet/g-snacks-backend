@@ -10,8 +10,10 @@ class Token {
     return sign({ sub }, secret, { expiresIn })
   }
 
-  static parseTokenAsync() {
+  static parseTokenAsync(bearer) {
     const token = bearer ? bearer.replace('Bearer ', '') : null
-    return verifyAsync(token, process.env.SECRET_KEY)
+    return verifyAsync(token, secret)
   }
 }
+
+module.exports = Token
