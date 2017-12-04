@@ -17,7 +17,7 @@ class AuthController {
   }
 
   static isAdmin (req, res, next) {
-
+    
   } 
 
   static registerUser (req, res, next) {

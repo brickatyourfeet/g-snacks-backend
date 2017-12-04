@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs')
 const knex = require('../../src/db/knex')
-const localAuth = require('./local')
+// const localAuth = require('./local')
 
 function createUser(req) {
   const salt = bcrypt.genSaltSync()
@@ -34,23 +34,21 @@ function ensureAuthenticated(req, res, next) {
 
   var header = req.headers.authorization.split(' ')
   var token = header[1]
-  localAuth.decodeToken(token, (err, payload) => {
-    if (err) {
-      return res.status(401).json({
-        status: 'Token has expired'
+  Token.parseTokenAsync(token).then(payload => {
+    // check if the user still exists in the db
+    return knex('users').where({ id: parseInt(payload.sub) }).first()
+    .then((user) => {
+      next()
+    })
+    .catch((err) => {
+      res.status(500).json({
+        status: 'error'
       })
-    } else {
-      // check if the user still exists in the db
-      return knex('users').where({ id: parseInt(payload.sub) }).first()
-        .then((user) => {
-          next()
-        })
-        .catch((err) => {
-          res.status(500).json({
-            status: 'error'
-          })
-        })
-    }
+    })
+  }).catch(err =>{
+    return res.status(401).json({
+      status: 'Token has expired'
+    })
   })
 }
 
