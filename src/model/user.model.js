@@ -4,7 +4,6 @@ const Token = require('./Token.model')
 
 class User extends Model {
   static isAuthenticated (token) {
-    console.log(token)
     return Token.parseTokenAsync(token).catch(error => {
       throw new Error(`You are not authorized to access that route`)
     })

@@ -18,12 +18,7 @@ class UsersController extends Controller {
   }
 
   static isAdmin (req, res, next) {
-    // get token from header
-    // find user from token
-    // return if user is admin
     const bearer = req.headers.authorization
-    console.log('isAdmin function in the users controller')
-    console.log(bearer)
     Model.isAdmin(bearer)
       .then(() => next())
       .catch(next)
