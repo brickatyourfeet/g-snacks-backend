@@ -1,10 +1,11 @@
+const bcrypt = require('bcryptjs')
+const knex = require('../db/knex')
 const Controller = require('./Controller')('users')
 const Model = require('../model/user.model')
 const Token = require('../model/Token.model')
 
-const authHelpers = require('../auth/_helpers')
-
 class UsersController extends Controller {
+  
   static isAuthenticated (req, res, next) {
     const bearer = req.headers.authorization
     Model.isAuthenticated(bearer)
@@ -16,7 +17,6 @@ class UsersController extends Controller {
     const bearer = req.headers.authorization
     const id = req.params.id
     Model.isAdminOrIsUser(id, bearer).then (result => {
-      console.log(result)
       if(result) next()
       else next({ message: 'Not authorized' })
     })
@@ -29,8 +29,21 @@ class UsersController extends Controller {
       .catch(next)
   } 
 
+  static createUser(req) {
+    const salt = bcrypt.genSaltSync()
+    const hash = bcrypt.hashSync(req.body.password, salt)
+    return knex('users')
+      .insert({
+        email: req.body.email,
+        password: hash,
+        first_name: req.body.first_name,
+        last_name: req.body.last_name
+      })
+      .returning('id').into('users');
+  }
+
   static registerUser (req, res, next) {
-    return authHelpers.createUser(req)
+    return UsersController.createUser(req)
       .then(user => { return Token.signToken(user) })
       .then((token) => {
         res.status(200).json({
@@ -39,7 +52,6 @@ class UsersController extends Controller {
         })
       })
       .catch((err) => {
-        console.log(err);
         res.status(500).json({
           status: err
         })
@@ -49,12 +61,14 @@ class UsersController extends Controller {
   static loginUser (req, res, next) {
     const email = req.body.email
     const password = req.body.password
-    return authHelpers.getUser(email)
+    return Model.getUserByEmail(email)
       .then((response) => {
-        authHelpers.comparePass(password, response.password)
+        UsersController.comparePass(password, response.password)
         return response
       })
-      .then((response) => { return Token.signToken(response) })
+      .then((response) => { 
+        return Token.signToken(response) 
+      })
       .then((token) => {
         res.status(200).json({
           status: 'success',
@@ -67,6 +81,13 @@ class UsersController extends Controller {
         })
       })
   }
+
+  static comparePass(userPassword, dbPassword) {
+    const bool = bcrypt.compareSync(userPassword, dbPassword)
+    if (!bool) throw new Error('invalid pass')
+    else return true
+  }
+
 }
 
 module.exports = UsersController

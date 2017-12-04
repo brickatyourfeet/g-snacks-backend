@@ -3,6 +3,10 @@ const Model = require('./Model')('users')
 const Token = require('./Token.model')
 
 class User extends Model {
+
+  static getUserByEmail(email) {
+    return knex('users').where({ email }).first()
+  }
   static isAuthenticated (token) {
     return Token.parseTokenAsync(token).catch(error => {
       throw new Error(`You are not authorized to access that route`)
@@ -17,8 +21,7 @@ class User extends Model {
   }
 
   static isAdmin (bearer) {
-    const token = bearer.split(' ')[1]
-    return Token.parseTokenAsync(token).then(payload => {
+    return Token.parseTokenAsync(bearer).then(payload => {
       return knex('users').where({ id: parseInt(payload.sub.id) }).first()
         .then(user => {
           if(!user.admin) throw new Error('User is not authorized')
@@ -29,15 +32,12 @@ class User extends Model {
 
   static isAdminOrIsUser (id, bearer) {
     return Token.parseTokenAsync(bearer).then(payload => {
-      console.log(payload)
       return this.show(payload.sub.id).then(user => {
-        console.log(user)
         if((user.admin) || (payload.sub.id === id)) {
           return true
         } else {
           return false
         }
-
       })
     })
   }
