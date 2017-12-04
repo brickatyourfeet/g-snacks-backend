@@ -12,9 +12,14 @@ class UsersController extends Controller {
       .catch(next)
   }
 
-  static isUser (req, res, next) {
-    // get token from header
-    // find user from token
+  static isAdminOrIsUser (req, res, next) {
+    const bearer = req.headers.authorization
+    const id = req.params.id
+    Model.isAdminOrIsUser(id, bearer).then (result => {
+      console.log(result)
+      if(result) next()
+      else next({ message: 'Not authorized' })
+    })
   }
 
   static isAdmin (req, res, next) {

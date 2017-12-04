@@ -26,6 +26,21 @@ class User extends Model {
         })
     })
   }
+
+  static isAdminOrIsUser (id, bearer) {
+    return Token.parseTokenAsync(bearer).then(payload => {
+      console.log(payload)
+      return this.show(payload.sub.id).then(user => {
+        console.log(user)
+        if((user.admin) || (payload.sub.id === id)) {
+          return true
+        } else {
+          return false
+        }
+
+      })
+    })
+  }
 }
 
 module.exports = User

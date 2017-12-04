@@ -31,9 +31,7 @@ function ensureAuthenticated(req, res, next) {
     })
   }
 
-  var header = req.headers.authorization.split(' ')
-  var token = header[1]
-  Token.parseTokenAsync(token).then(payload => {
+  Token.parseTokenAsync(req.headers.authorization).then(payload => {
     // check if the user still exists in the db
     return knex('users').where({ id: parseInt(payload.sub) }).first()
     .then((user) => {
@@ -52,8 +50,7 @@ function ensureAuthenticated(req, res, next) {
 }
 
 function isAdmin(bearer) {
-  const token = bearer.split(' ')[1]
-  return Token.parseTokenAsync(token).then(payload => {
+  return Token.parseTokenAsync(bearer).then(payload => {
     return knex('users').where({ id: parseInt(payload.sub) }).first()
       .then(user => {
         return user.isAdmin
