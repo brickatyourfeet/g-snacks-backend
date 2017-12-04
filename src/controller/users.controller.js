@@ -32,6 +32,8 @@ class UsersController extends Controller {
   static createUser(req) {
     const salt = bcrypt.genSaltSync()
     const hash = bcrypt.hashSync(req.body.password, salt)
+
+    // this is the only remaining DB call in this file. Factor out??
     return knex('users')
       .insert({
         email: req.body.email,

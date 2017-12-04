@@ -7,6 +7,7 @@ class User extends Model {
   static getUserByEmail(email) {
     return knex('users').where({ email }).first()
   }
+  
   static isAuthenticated (token) {
     return Token.parseTokenAsync(token).catch(error => {
       throw new Error(`You are not authorized to access that route`)
