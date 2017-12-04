@@ -6,7 +6,7 @@ const secret = process.env.SECRET_KEY
 class Token {
   static signToken({ id, role }) {
     const sub = { id, role }
-    const expiresIn = '2 weeks'
+    const expiresIn = '14d'
     return sign({ sub }, secret, { expiresIn })
   }
 

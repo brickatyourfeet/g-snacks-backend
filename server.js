@@ -16,7 +16,7 @@ const users = require('./src/routes/users')
 app.use('/api/users', users)
 
 const auth = require('./src/routes/auth');
-app.use('/api', auth)
+app.use('/auth', auth)
 
 app.use((req, res) => {
   const status = 404;
