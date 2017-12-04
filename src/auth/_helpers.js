@@ -1,6 +1,5 @@
 const bcrypt = require('bcryptjs')
 const knex = require('../../src/db/knex')
-// const localAuth = require('./local')
 
 function createUser(req) {
   const salt = bcrypt.genSaltSync()
@@ -51,6 +50,19 @@ function ensureAuthenticated(req, res, next) {
     })
   })
 }
+
+function isAdmin(bearer) {
+  const token = bearer.split(' ')[1]
+  return Token.parseTokenAsync(token).then(payload => {
+    return knex('users').where({ id: parseInt(payload.sub) }).first()
+      .then(user => {
+        return user.isAdmin
+      }).catch(err => {
+        return 'There was an error'
+      })
+  })
+}
+
 
 
 module.exports = {

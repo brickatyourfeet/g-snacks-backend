@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const ctrl = require('../controller/reviews.controller')
-const Auth = require('../controller/auth.controller')
+const Auth = require('../controller/users.controller')
 
 router.get('/', Auth.isAuthenticated, ctrl.index)
 router.get('/:id', ctrl.exists, ctrl.show)
