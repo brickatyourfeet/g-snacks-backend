@@ -26,6 +26,18 @@ class Review extends Model {
       return payload.sub.id
     }).catch(console.log)
   }
+
+  static userOwnsReview (bearer, snackId) {
+    const tokenPromise = Token.parseTokenAsync(bearer)
+    const snackPromise = this.show(snackId)
+
+    return Promise.all([tokenPromise, snackPromise])
+      .then(result => {
+        const [ tokenResult, snackResult ] = result
+        console.log(tokenResult, snackResult)
+        return tokenResult.sub.id === snackResult.user_id
+      })
+  }
 }
 
 module.exports = Review

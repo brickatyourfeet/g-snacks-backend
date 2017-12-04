@@ -4,9 +4,13 @@ const fields = ['title', 'text', 'rating', 'snack_id', 'user_id']
 
 class ReviewsController extends Controller {
   static userOwnsReview (req, res, next) {
-    // check bearer token
-    // get review 
-    // see if review.user_id matches bearer.sub.id
+    Model.userOwnsReview (req.headers.authorization, req.params.id).then(result => {
+      if(result) {
+        next()
+      } else {
+        next({ status: '403', message: 'Not authorized' })
+      }
+    })
   }
 
   static userCanReviewSnack (req, res, next) {
