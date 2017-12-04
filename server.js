@@ -6,6 +6,9 @@ const path = require('path');
 const app = express();
 app.use(bodyParser.json());
 
+const snackReviews = require('./src/routes/snackReviews')
+app.use('/api/snacks/:id/reviews', snackReviews)
+
 const snacks = require('./src/routes/snacks');
 app.use('/api/snacks', snacks);
 

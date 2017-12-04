@@ -17,7 +17,7 @@ class SnacksController extends Controller {
       if(!fields.includes(key)) delete req.body[key]
     })
     next()
-  }
+  } 
 }
 
 module.exports = SnacksController

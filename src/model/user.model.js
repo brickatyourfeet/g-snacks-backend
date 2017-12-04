@@ -10,7 +10,10 @@ class User extends Model {
   }
 
   static isUser (id, token) {
-
+    return Token.parseTokenAsync(token).then(payload => {
+      if(payload.sub.id === parseInt(id)) return true
+      else throw new Error('User is not authorized')
+    })
   }
 
   static isAdmin (bearer) {
