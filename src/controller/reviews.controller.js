@@ -10,9 +10,14 @@ class ReviewsController extends Controller {
   }
 
   static userCanReviewSnack (req, res, next) {
-    // check bearer token
-    // get snack reviews
-    // see if user has already reviewed that snack
+    const bearer = req.headers.authorization
+    const snackId = req.body.snack_id
+    Model.hasAlreadyPostedReview(bearer, snackId).then(result => {
+      if(result) return next({ message: 'User has already reviewed snack' })
+      else {
+        return next()
+      }
+    }) 
   }
 
   static getAllSnackReviews (req, res, next) {
@@ -35,14 +40,15 @@ class ReviewsController extends Controller {
     if(errors.length) next({ message: 'There were errors', errors })
     else next()
   }
+
+  static addUserId (req, res, next) {
+    const bearer = req.headers.authorization
+    Model.getUserIdFromBearer(bearer).then(result => {
+      req.body.user_id = result
+      next()
+    }).catch(console.error)
+    
+  }
 }
 
 module.exports = ReviewsController
-
-// const review = {
-//   title: req.body.title,
-//   text: req.body.text,
-//   rating: req.body.rating,
-//   snack_id: req.body.snack_id,
-//   user_id: req.body.user_id
-// }

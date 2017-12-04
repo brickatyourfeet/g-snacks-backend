@@ -4,5 +4,4 @@ const auth = require('../controller/users.controller')
 
 router.get('/', reviewController.getAllSnackReviews)
 
-
 module.exports = router

@@ -1,4 +1,5 @@
 const Model = require('./Model')('reviews')
+const Token = require('../model/Token.model')
 const knex = require('../db/knex')
 
 class Review extends Model {
@@ -6,16 +7,24 @@ class Review extends Model {
     return knex('reviews').where({ snack_id: snackId })
   }
 
-  static hasAlreadyPostedReview(user, snack) {
-    const match = {
-      user_id: user.id,
-      snack_id: snack.id
-    }
-    return knex('reviews').where(match).select('*').first()
-      .then(match => {
-        if(match[0]) return true
-        else return false
-      })
+  static hasAlreadyPostedReview(bearer, snackId) {
+    return Token.parseTokenAsync(bearer).then(payload => {
+      const match = {
+        user_id: payload.sub.id,
+        snack_id: snackId
+      }
+      return match
+    })
+    .then(match => knex('reviews').where(match).select('*'))
+    .then(found => {
+      return (!!found.length)
+    })
+  }
+
+  static getUserIdFromBearer (bearer) {
+    return Token.parseTokenAsync(bearer).then(payload => {
+      return payload.sub.id
+    }).catch(console.log)
   }
 }
 
