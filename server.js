@@ -1,10 +1,12 @@
 const express = require('express')
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const cors = require('cors');
 const path = require('path');
 
 const app = express();
 app.use(bodyParser.json());
+app.use(cors())
 
 const snackReviews = require('./src/routes/snackReviews')
 app.use('/api/snacks/:id/reviews', snackReviews)
