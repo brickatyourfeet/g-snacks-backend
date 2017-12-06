@@ -26,7 +26,11 @@ class UsersController extends Controller {
     const bearer = req.headers.authorization
     Model.isAdmin(bearer)
       .then(() => next())
-      .catch(next)
+      .catch(error => {
+        Token.parseTokenAsync(bearer).then(result => {
+          res.status(400).json({ message: 'User is not authorized', id: result.sub.id })
+        })
+      })
   } 
 
   static createUser(req) {
