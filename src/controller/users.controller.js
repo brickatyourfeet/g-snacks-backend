@@ -5,29 +5,30 @@ const Model = require('../model/user.model')
 const Token = require('../model/Token.model')
 
 class UsersController extends Controller {
-  
-  static isAuthenticated (req, res, next) {
+
+  static isAuthenticated(req, res, next) {
     const bearer = req.headers.authorization
     Model.isAuthenticated(bearer)
       .then(() => next())
       .catch(next)
   }
 
-  static isAdminOrIsUser (req, res, next) {
+  static isAdminOrIsUser(req, res, next) {
     const bearer = req.headers.authorization
     const id = req.params.id
-    Model.isAdminOrIsUser(id, bearer).then (result => {
-      if(result) next()
-      else next({ message: 'Not authorized' })
-    })
+    Model.isAdminOrIsUser(id, bearer).then(result => {
+        if (result) next()
+        else next({ message: 'Not authorized' })
+      })
+      .catch(next)
   }
 
-  static isAdmin (req, res, next) {
+  static isAdmin(req, res, next) {
     const bearer = req.headers.authorization
     Model.isAdmin(bearer)
       .then(() => next())
       .catch(next)
-  } 
+  }
 
   static createUser(req) {
     const salt = bcrypt.genSaltSync()
@@ -44,7 +45,7 @@ class UsersController extends Controller {
       .returning('id').into('users');
   }
 
-  static registerUser (req, res, next) {
+  static registerUser(req, res, next) {
     return UsersController.createUser(req)
       .then(user => { return Token.signToken(user) })
       .then((token) => {
@@ -60,7 +61,7 @@ class UsersController extends Controller {
       })
   }
 
-  static loginUser (req, res, next) {
+  static loginUser(req, res, next) {
     const email = req.body.email
     const password = req.body.password
     return Model.getUserByEmail(email)
@@ -68,8 +69,8 @@ class UsersController extends Controller {
         UsersController.comparePass(password, response.password)
         return response
       })
-      .then((response) => { 
-        return Token.signToken(response) 
+      .then((response) => {
+        return Token.signToken(response)
       })
       .then((token) => {
         res.status(200).json({
