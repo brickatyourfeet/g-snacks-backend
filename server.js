@@ -11,6 +11,9 @@ app.use(cors())
 const snackReviews = require('./src/routes/snackReviews')
 app.use('/api/snacks/:id/reviews', snackReviews)
 
+const userReviews = require('./src/routes/userReviews')
+app.use('/api/users/:id/reviews', userReviews)
+
 const snacks = require('./src/routes/snacks');
 app.use('/api/snacks', snacks);
 

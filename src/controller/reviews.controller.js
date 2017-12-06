@@ -30,6 +30,12 @@ class ReviewsController extends Controller {
     })
   }
 
+  static getAllUserReviews (req, res, next) {
+    Model.getAllUserReviews(req.params.id).then(response => {
+      res.status(200).json({ 'reviews': response })
+    })
+  }
+
   static prune(req, res, next) {
     Object.keys(req.body).forEach(key => {
       if(!fields.includes(key)) delete req.body[key]

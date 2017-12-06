@@ -7,6 +7,10 @@ class Review extends Model {
     return knex('reviews').where({ snack_id: snackId })
   }
 
+  static getAllUserReviews(userId) {
+    return knex('reviews').where({ user_id: userId })
+  }
+
   static hasAlreadyPostedReview(bearer, snackId) {
     return Token.parseTokenAsync(bearer).then(payload => {
       const match = {
