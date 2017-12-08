@@ -3,7 +3,7 @@ const pluralize = require('pluralize')
 
 module.exports = name => {
   const singular = pluralize.singular(name)
-  const modelName = capitalize(singular)
+  const modelName = singular
   const Model = require(`../model/${modelName}.model`)
 
   const errorHandler = next => {
