@@ -91,6 +91,32 @@ class UsersController extends Controller {
     else return true
   }
 
+  static userInfo(req, res, next) {
+    const bearer = req.headers.authorization
+    //parseTokenAsync resolves to promise
+    Token.parseTokenAsync(bearer)
+      .then((payload) => {
+        let id = payload.sub.id
+        knex('users').where('id', id).first()
+          .then((user) => {
+            res.status(200).json({
+              email: user.email,
+              first_name: user.first_name,
+              last_name: user.last_name,
+              admin: user.admin,
+              id: user.id
+            })
+          })
+
+      })
+      .catch((err) => {
+        res.status(401).json({
+          status: err
+        })
+      })
+
+  }
+
 }
 
 module.exports = UsersController
