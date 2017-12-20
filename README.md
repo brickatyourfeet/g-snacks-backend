@@ -1,14 +1,8 @@
-![logo](./public/res/logo_dark_small.png)
-
-Your goal is to create a CRUD application to review and rate your favorite snacks at Galvanize! Draw on the topics you've learned from Q1 & Q2 to design and deploy an application that covers the desired user stories.
-
-This repository is solely the backend of the project. You will need to build the frontend as well!
 
 ## User Stories
 
-This repo includes some files to get you started, but it's up to you to finish these user stories:
 
-- **User can view all snacks (already complete)**
+- **User can view all snacks**
   - When the user visits the homepage they see a list of all snacks
 
 
@@ -75,7 +69,7 @@ This repo includes some files to get you started, but it's up to you to finish t
 
 ![snacks ERD](./snacks_erd.jpg)
 
-**NOTE:** The migrations and seeds for the `snacks` table are included. You will need to implement the `users` and `reviews` tables yourself following this relationship diagram.
+
 
 ## Routes
 
